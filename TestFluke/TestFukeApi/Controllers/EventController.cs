@@ -20,7 +20,7 @@ namespace TestFukeApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEvents()
+        public IActionResult Index()
         {
             return Ok(this.eventService.GetEvents());
         }
