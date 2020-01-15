@@ -9,11 +9,11 @@ namespace RequestService
     public class HttpRequests
     {
         private readonly string uri;
+
         public HttpRequests(string uri)
         {
             this.uri = uri;
         }
-
 
         public T Get<T>(string actionUrl) where T : class
         {

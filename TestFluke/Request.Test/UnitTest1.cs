@@ -18,10 +18,6 @@ namespace Tests
         {
             string urlBase = "https://eonet.sci.gsfc.nasa.gov/api/v2.1/";//ConfigurationManager.AppSettings["api-url-base"];
             Event test = new HttpRequests(urlBase).Get<Event>("events");
-
-
-
-
             Assert.Pass();
         }
     }
