@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService", "RequestService\RequestService.csproj", "{63CEA188-88CE-4989-93E5-7AFA3C6A1FC3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Request.Test", "Request.Test\Request.Test.csproj", "{7FBEF76F-FD6A-4A26-AB31-921124C892D4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{85C9260B-616B-4ECE-86B3-6C9228969B25}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{6123A419-0DA7-446B-8EB4-B7BF10893F6E}"
@@ -17,20 +13,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{4FD1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bussines", "Bussines\Bussines.csproj", "{9A23E320-5633-483B-B5BD-22465F443DC1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{9C5C0A16-148C-4433-AEBC-7CF5C2C24FB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JqueryWebApp", "JqueryWebApp\JqueryWebApp.csproj", "{90A792D6-2ECE-4599-BD0D-A17CE15F710E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{63CEA188-88CE-4989-93E5-7AFA3C6A1FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63CEA188-88CE-4989-93E5-7AFA3C6A1FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63CEA188-88CE-4989-93E5-7AFA3C6A1FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63CEA188-88CE-4989-93E5-7AFA3C6A1FC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FBEF76F-FD6A-4A26-AB31-921124C892D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FBEF76F-FD6A-4A26-AB31-921124C892D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FBEF76F-FD6A-4A26-AB31-921124C892D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FBEF76F-FD6A-4A26-AB31-921124C892D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{85C9260B-616B-4ECE-86B3-6C9228969B25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{85C9260B-616B-4ECE-86B3-6C9228969B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85C9260B-616B-4ECE-86B3-6C9228969B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,16 +35,19 @@ Global
 		{9A23E320-5633-483B-B5BD-22465F443DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A23E320-5633-483B-B5BD-22465F443DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A23E320-5633-483B-B5BD-22465F443DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90A792D6-2ECE-4599-BD0D-A17CE15F710E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90A792D6-2ECE-4599-BD0D-A17CE15F710E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90A792D6-2ECE-4599-BD0D-A17CE15F710E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90A792D6-2ECE-4599-BD0D-A17CE15F710E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{63CEA188-88CE-4989-93E5-7AFA3C6A1FC3} = {4FD16E8E-23A9-41AA-BCC8-FBECFDCD2238}
-		{7FBEF76F-FD6A-4A26-AB31-921124C892D4} = {4FD16E8E-23A9-41AA-BCC8-FBECFDCD2238}
 		{85C9260B-616B-4ECE-86B3-6C9228969B25} = {4FD16E8E-23A9-41AA-BCC8-FBECFDCD2238}
 		{4D9CB1AA-66B3-4301-9BFA-BBF8CD98FD95} = {6123A419-0DA7-446B-8EB4-B7BF10893F6E}
 		{9A23E320-5633-483B-B5BD-22465F443DC1} = {4FD16E8E-23A9-41AA-BCC8-FBECFDCD2238}
+		{90A792D6-2ECE-4599-BD0D-A17CE15F710E} = {9C5C0A16-148C-4433-AEBC-7CF5C2C24FB7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6F724D0-5FED-4361-ABB5-8B2F09C0E091}

@@ -1,9 +1,8 @@
 ﻿using Bussines.Contracts;
 using Models;
-using RequestService;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Bussines.Service
 {
@@ -21,19 +20,77 @@ namespace Bussines.Service
             return this.Get<Event>("events");
         }
 
-        public Event GetEventsByCategory(string category, string sortBy)
+        public Event GetEventsByCategory(int category, string sortBy)
         {
-            throw new NotImplementedException();
+            if (category == 0)
+                return null;
+
+            var events = this.Get<Event>($"categories/{category}");
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                events.Events = SortEvents(events, sortBy);
+                return events;
+            }
+            return events;
         }
 
         public Event GetEventsByDate(DateTime datesearch, string sortBy)
         {
-            throw new NotImplementedException();
+            var events = this.Get<Event>($"events?status=closed");
+            events.Events = events.Events.Where(r => r.Closed.HasValue &&
+            (r.Closed.Value.Year == datesearch.Year && r.Closed.Value.Month == datesearch.Month && r.Closed.Value.Day == datesearch.Day)).ToList();
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                events.Events = SortEvents(events, sortBy);
+                return events;
+            }
+            return events;
         }
 
-        public Event GetEventsByStatus(string status, string sortBy)
+        public Event GetEventsByStatus(string statusEvent, string sortBy)
         {
-            throw new NotImplementedException();
+            statusEvent = string.IsNullOrEmpty(statusEvent) ? "open" : statusEvent;
+            var events = this.Get<Event>($"events?status={statusEvent}");
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                events.Events = SortEvents(events, sortBy);
+                return events;
+            }
+            return events;
+        }
+
+        private IEnumerable<EventItem> SortEvents(Event currentEvent, string sort)
+        {
+            switch (sort)
+            {
+                case
+                    "date":
+                    return currentEvent.Events.OrderBy(r => r.Closed);
+                case
+                    "status":
+                    return currentEvent.Events.OrderBy(r => r.IsClosed);
+                case
+                    "category":
+                    return currentEvent.Events.OrderBy(r => r.Title).Select(d => new EventItem
+                    {
+                        Id = d.Id,
+                        Closed = d.Closed,
+                        Link = d.Link,
+                        Title = d.Title,
+                        Categories = d.Categories.OrderBy(r => r.Title)
+                    });
+                default:
+                    return currentEvent.Events.OrderBy(r => r.Title).Select(d => new EventItem
+                    {
+                        Id = d.Id,
+                        Closed = d.Closed,
+                        Link = d.Link,
+                        Title = d.Title,
+                        Categories = d.Categories.OrderBy(r => r.Title)
+                    });
+            }
         }
     }
 }

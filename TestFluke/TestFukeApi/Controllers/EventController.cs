@@ -19,11 +19,38 @@ namespace TestFukeApi.Controllers
             this.eventService = eventService;
         }
 
-
         [HttpGet]
         public IActionResult GetEvents()
         {
             return Ok(this.eventService.GetEvents());
+        }
+
+        [HttpGet]
+        [Route("GetEventsByStatus")]
+        public IActionResult GetEvents(string statusEvent, string sortBy)
+        {
+            return Ok(this.eventService.GetEventsByStatus(statusEvent, sortBy));
+        }
+
+        [HttpGet]
+        [Route("GetEventsByCategory")]
+        public IActionResult GetEventsByCategory(int category, string sortBy)
+        {
+            try
+            {
+                return Ok(this.eventService.GetEventsByCategory(category, sortBy));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("GetEventsByDate")]
+        public IActionResult GetEvents(DateTime datetimeClosed, string sortBy)
+        {
+            return Ok(this.eventService.GetEventsByDate(datetimeClosed, sortBy));
         }
     }
 }

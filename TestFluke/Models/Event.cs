@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace Models
 {
-
     public class Event
     {
         public string Id { get; set; }
         public string Description { get; set; }
-        public IList<EventItem> Events { get; set; }
+        public IEnumerable<EventItem> Events { get; set; }
     }
 
     public class EventItem
@@ -16,7 +15,12 @@ namespace Models
         public string Id { get; set; }
         public string Title { get; set; }
         public string Link { get; set; }
-        public IList<Categories> Categories { get; set; }
+        public DateTime? Closed { get; set; }
+        public bool IsClosed
+        {
+            get { return Closed.HasValue; }
+        }
+        public IEnumerable<Categories> Categories { get; set; }
     }
 
     public class Categories

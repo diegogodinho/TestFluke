@@ -9,7 +9,7 @@ namespace Bussines.Contracts
     {
         Event GetEvents();
         Event GetEventsByDate(DateTime datesearch, string sortBy);
-        Event GetEventsByStatus(string status, string sortBy);
-        Event GetEventsByCategory(string category, string sortBy);
+        Event GetEventsByStatus(string statusEvent, string sortBy);
+        Event GetEventsByCategory(int category, string sortBy);
     }
 }
