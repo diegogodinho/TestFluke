@@ -46,8 +46,8 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" class="header-click" data-clickdata="id">ID<i class="fa fa-fw fa-caret-down"></i> </th>
-                <th scope="col" class="header-click" data-clickdata="Title">Title<i class="fa fa-fw fa-caret-down"></i> </th>
+                <th scope="col" class="header-click" data-clickdata="id" data-sort="">ID<i class="fa fa-fw fa-sort"></i> </th>
+                <th scope="col" class="header-click" data-clickdata="Title" data-sort="">Title<i class="fa fa-fw fa-sort"></i> </th>
                 <th scope="col">Is Closed</th>
                 <th scope="col">Action</th>
             </tr>
@@ -63,15 +63,22 @@
         $(function () {
 
             $('.header-click').click(function () {
-                GetEvents({ StatusEvent: $('#status').val(), SortByField: $(this).data('clickdata') });
+                var sort = SortTable(this);
+                GetEvents({
+                    StatusEvent: $('#status').val(),
+                    Category: $('#categories').val(),
+                    SortByField: $(this).data('clickdata'),
+                    SortMethod: sort
+                });
             });
 
             $('#applyFilters').click(function () {
-                GetEvents({ StatusEvent: $('#status').val(), SortByField: '' });
+                GetEvents({ StatusEvent: $('#status').val(), Category: $('#categories').val(), SortByField: '' });
             });
 
             $('#cleanFilters').click(function () {
-                $('#status').val('');
+                $('#status,#categories').val('');
+                GetEvents({});
             });
 
             function GetEvents(search) {
@@ -131,8 +138,30 @@
                 });
             }
 
+            function SortTable(item) {
+                var sort = $(item).data('sort');
+                if (sort.length === 0) {
+                    sort = 'asc';
+                    $(item).find('i').removeClass('fa-sort');
+                    $(item).find('i').addClass('fa-caret-up');
+                }
+                else if (sort === 'asc') {
+                    sort = 'desc';
+                     $(item).find('i').removeClass('fa-caret-up');
+                    $(item).find('i').addClass('fa-caret-down');
+                }
+                else if (sort === 'desc') {
+                    sort = 'asc';
+                     $(item).find('i').removeClass('fa-caret-down');
+                    $(item).find('i').addClass('fa-caret-up');
+                }
+                $(item).data('sort', sort);
+                return sort;
+            }
+
+
             function init() {
-                GetEvents({ status: "", sortBy: "" });
+                GetEvents({});
                 GetCategories();
             }
             init();

@@ -27,7 +27,7 @@ namespace Bussines.Service
 
                 if (!string.IsNullOrEmpty(model.SortByField))
                 {
-                    eventsReturn.Events = SortEvents(eventsReturn, model.SortByField);
+                    eventsReturn.Events = SortEvents(eventsReturn, model.SortByField, model.SortMethod);
                 }
                 return eventsReturn;
             }
@@ -37,7 +37,7 @@ namespace Bussines.Service
             }
         }
 
-        private IEnumerable<EventItem> SortEvents(Event currentEvent, string sort)
+        private IEnumerable<EventItem> SortEvents(Event currentEvent, string sort, string sortMethod)
         {
             switch (sort)
             {
@@ -60,7 +60,10 @@ namespace Bussines.Service
                 default:
                     var orderByParameter = Expression.Parameter(typeof(EventItem));
                     var orderByExpression = Expression.Lambda<Func<EventItem, IComparable>>(Expression.PropertyOrField(orderByParameter, sort), orderByParameter).Compile();
-                    return currentEvent.Events.OrderBy(orderByExpression);
+                    if (string.IsNullOrEmpty(sortMethod) || sortMethod == "asc")
+                        return currentEvent.Events.OrderBy(orderByExpression);
+                    else
+                        return currentEvent.Events.OrderByDescending(orderByExpression);
 
             }
         }
