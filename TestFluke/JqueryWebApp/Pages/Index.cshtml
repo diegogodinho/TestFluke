@@ -10,13 +10,14 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
+                <th scope="col">Is Closed</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody id="bodyEvents">
             <tr>
             </tr>
-        </tbody>
+        </tbody>        
     </table>
 </div>
 @section Scripts{
@@ -24,16 +25,27 @@
         $(function () {
 
             $.ajax({
-                url: 'http://localhost:52166/api/Event/',
+                url: 'https://localhost:44300/api/Event/',
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (data) {
                     if (data && data.events) {
                         $("#bodyEvents").empty();
                         $(data.events).each(function (index, element) {
-                            $('#bodyEvents').append("<tr><td>" + element.id + "</td> <td>" + element.title + "</td><td><a href='\Event\\" + element.id + "'>Details</a></td></tr>");
+                            var elementRow = $('<tr>');
+                            var elementID = $("<td>", { "text": element.id });
+                            var elementTitle = $("<td>", { "text": element.title });
+                            var elementIsClosed = $("<td>", { "text": element.IsClosed ? 'Yes' : 'No' });
+                            var elementLink = $('<td>').append($("<a>", { "href": "\Event\\" + element.id, "text": "Details" }));
+                            elementRow.append(elementID);
+                            elementRow.append(elementTitle);
+                            elementRow.append(elementIsClosed);
+                            elementRow.append(elementLink);
+                            $('#bodyEvents').append(elementRow);
+                            
                         });
                     }
+                    alert('Veio do ceu!');
                 },
                 error: function () {
                     debugger;
