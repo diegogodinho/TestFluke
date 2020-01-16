@@ -63,11 +63,11 @@
         $(function () {
 
             $('.header-click').click(function () {
-                GetEvents({ status: $('#status').val(), sortBy: $(this).data('clickdata') });
+                GetEvents({ StatusEvent: $('#status').val(), SortByField: $(this).data('clickdata') });
             });
 
             $('#applyFilters').click(function () {
-                GetEvents({ status: $('#status').val(), sortBy: '' });
+                GetEvents({ StatusEvent: $('#status').val(), SortByField: '' });
             });
 
             $('#cleanFilters').click(function () {
@@ -77,8 +77,10 @@
             function GetEvents(search) {
                 $("#bodyEvents").empty();
                 $.ajax({
-                    url: 'https://localhost:44300/api/Event/GetEventsByStatus?statusEvent=' + search.status + '&sortBy=' + search.sortBy,
+                    url: 'https://localhost:44300/api/Event',
                     dataType: 'json',
+                    method: 'POST',
+                    data: JSON.stringify(search),
                     contentType: 'application/json',
                     success: function (data) {
                         if (data && data.events) {

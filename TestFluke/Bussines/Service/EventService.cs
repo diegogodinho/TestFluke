@@ -16,58 +16,25 @@ namespace Bussines.Service
             this.settings = settings;
         }
 
-        public Event GetEvents(string sortBy)
+        public Event GetEvents(GetEventModel model)
         {
-            if (string.IsNullOrEmpty(sortBy))
-                return this.Get<Event>("events");
+            if (model != null)
+            {
+                var url = string.IsNullOrEmpty(model.Category) ? "events" : $"categories/{model.Category}";
+                url += string.IsNullOrEmpty(model.StatusEvent) ? "" : $"?status={model.StatusEvent}";
 
+                var eventsReturn = this.Get<Event>(url);
+
+                if (!string.IsNullOrEmpty(model.SortByField))
+                {
+                    eventsReturn.Events = SortEvents(eventsReturn, model.SortByField);
+                }
+                return eventsReturn;
+            }
             else
             {
-                var events = this.Get<Event>("events");
-                events.Events = SortEvents(events, sortBy);
-                return events;
+                return this.Get<Event>("events");
             }
-        }
-
-        public Event GetEventsByCategory(int category, string sortBy)
-        {
-            if (category == 0)
-                return null;
-
-            var events = this.Get<Event>($"categories/{category}");
-
-            if (!string.IsNullOrEmpty(sortBy))
-            {
-                events.Events = SortEvents(events, sortBy);
-                return events;
-            }
-            return events;
-        }
-
-        public Event GetEventsByDate(DateTime datesearch, string sortBy)
-        {
-            var events = this.Get<Event>($"events?status=closed");
-            events.Events = events.Events.Where(r => r.Closed.HasValue &&
-            (r.Closed.Value.Year == datesearch.Year && r.Closed.Value.Month == datesearch.Month && r.Closed.Value.Day == datesearch.Day)).ToList();
-            if (!string.IsNullOrEmpty(sortBy))
-            {
-                events.Events = SortEvents(events, sortBy);
-                return events;
-            }
-            return events;
-        }
-
-        public Event GetEventsByStatus(string statusEvent, string sortBy)
-        {
-            statusEvent = string.IsNullOrEmpty(statusEvent) ? "open" : statusEvent;
-            var events = this.Get<Event>($"events?status={statusEvent}");
-
-            if (!string.IsNullOrEmpty(sortBy))
-            {
-                events.Events = SortEvents(events, sortBy);
-                return events;
-            }
-            return events;
         }
 
         private IEnumerable<EventItem> SortEvents(Event currentEvent, string sort)

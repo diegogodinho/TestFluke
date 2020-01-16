@@ -6,6 +6,7 @@ using Bussines.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 
 namespace TestFukeApi.Controllers
 {
@@ -21,38 +22,10 @@ namespace TestFukeApi.Controllers
             this.eventService = eventService;
         }
 
-        [HttpGet]
-        public IActionResult Index(string sortBy)
+        [HttpPost]
+        public IActionResult Index([FromBody]GetEventModel model)
         {
-            return Ok(this.eventService.GetEvents(sortBy));
-        }
-
-        [HttpGet]
-        [Route("GetEventsByStatus")]
-        public IActionResult GetEvents(string statusEvent, string sortBy)
-        {
-            return Ok(this.eventService.GetEventsByStatus(statusEvent, sortBy));
-        }
-
-        [HttpGet]
-        [Route("GetEventsByCategory")]
-        public IActionResult GetEventsByCategory(int category, string sortBy)
-        {
-            try
-            {
-                return Ok(this.eventService.GetEventsByCategory(category, sortBy));
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpGet]
-        [Route("GetEventsByDate")]
-        public IActionResult GetEvents(DateTime datetimeClosed, string sortBy)
-        {
-            return Ok(this.eventService.GetEventsByDate(datetimeClosed, sortBy));
+            return Ok(this.eventService.GetEvents(model));
         }
     }
 }
