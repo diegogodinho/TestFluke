@@ -3,28 +3,21 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+<h2>Events</h2>
 <div class="text-center">
-
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="bodyEvents">
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
             </tr>
         </tbody>
     </table>
-
 </div>
 @section Scripts{
     <script type="text/javascript">
@@ -32,12 +25,19 @@
 
             $.ajax({
                 url: 'http://localhost:52166/api/Event/',
-                
-                dataType: 'application/json',
+                dataType: 'json',
                 contentType: 'application/json',
                 success: function (data) {
-                    debugger;
+                    if (data && data.events) {
+                        $("#bodyEvents").empty();
+                        $(data.events).each(function (index, element) {
+                            $('#bodyEvents').append("<tr><td>" + element.id + "</td> <td>" + element.title + "</td><td><a href='\Event\\" + element.id + "'>Details</a></td></tr>");
+                        });
+                    }
                 },
+                error: function () {
+                    debugger;
+                }
             })
         });
     </script>
