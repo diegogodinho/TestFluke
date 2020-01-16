@@ -3,13 +3,20 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@section Header{
+    <style>
+        .header-click {
+            cursor: pointer;
+        }
+    </style>
+}
 <h2>Events</h2>
 <div class="text-center">
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Title</th>
+                <th scope="col" class="header-click" data-clickdata="ID">ID<i class="fa fa-fw fa-caret-down"></i> </th>
+                <th scope="col">Title<i class="fa fa-fw fa-caret-down"></i> </th>
                 <th scope="col">Is Closed</th>
                 <th scope="col">Action</th>
             </tr>
@@ -17,12 +24,16 @@
         <tbody id="bodyEvents">
             <tr>
             </tr>
-        </tbody>        
+        </tbody>
     </table>
 </div>
 @section Scripts{
     <script type="text/javascript">
         $(function () {
+
+            $('.header-click').click(function () {
+                alert('Ordernar!');
+            });
 
             $.ajax({
                 url: 'https://localhost:44300/api/Event/',
@@ -42,10 +53,10 @@
                             elementRow.append(elementIsClosed);
                             elementRow.append(elementLink);
                             $('#bodyEvents').append(elementRow);
-                            
+
                         });
                     }
-                    alert('Veio do ceu!');
+
                 },
                 error: function () {
                     debugger;
