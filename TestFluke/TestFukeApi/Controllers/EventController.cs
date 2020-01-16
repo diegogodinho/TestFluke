@@ -27,5 +27,12 @@ namespace TestFukeApi.Controllers
         {
             return Ok(this.eventService.GetEvents(model));
         }
+
+        [HttpPost]
+        [Route("GetByID")]
+        public IActionResult GetByID([FromBody]GetEventByIdModel model)
+        {
+            return Ok(eventService.GetEvent(model));
+        }
     }
 }

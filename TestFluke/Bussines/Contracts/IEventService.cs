@@ -7,6 +7,7 @@ namespace Bussines.Contracts
 {
     public interface IEventService
     {
-        Event GetEvents(GetEventModel model);        
+        Event GetEvents(GetEventModel model);
+        EventDetail GetEvent(GetEventByIdModel model);
     }
 }

@@ -16,6 +16,22 @@ namespace Bussines.Service
             this.settings = settings;
         }
 
+        public EventDetail GetEvent(GetEventByIdModel model)
+        {
+            if (model != null && !string.IsNullOrEmpty(model.EventID))
+            {
+                var eventsResult = this.Get<EventDetail>($"events/{model.EventID}");
+
+                if (!string.IsNullOrEmpty(model.SortByField))
+                {
+                    eventsResult.Categories = SortCategories(eventsResult, model.SortByField, model.SortMethod);
+                }
+                return eventsResult;
+
+            }
+            return null;
+        }
+
         public Event GetEvents(GetEventModel model)
         {
             if (model != null)
@@ -39,33 +55,24 @@ namespace Bussines.Service
 
         private IEnumerable<EventItem> SortEvents(Event currentEvent, string sort, string sortMethod)
         {
-            switch (sort)
-            {
-                case
-                    "date":
-                    return currentEvent.Events.OrderBy(r => r.Closed);
-                case
-                    "status":
-                    return currentEvent.Events.OrderBy(r => r.IsClosed);
-                case
-                    "category":
-                    return currentEvent.Events.OrderBy(r => r.Title).Select(d => new EventItem
-                    {
-                        Id = d.Id,
-                        Closed = d.Closed,
-                        Link = d.Link,
-                        Title = d.Title,
-                        Categories = d.Categories.OrderBy(r => r.Title)
-                    });
-                default:
-                    var orderByParameter = Expression.Parameter(typeof(EventItem));
-                    var orderByExpression = Expression.Lambda<Func<EventItem, IComparable>>(Expression.PropertyOrField(orderByParameter, sort), orderByParameter).Compile();
-                    if (string.IsNullOrEmpty(sortMethod) || sortMethod == "asc")
-                        return currentEvent.Events.OrderBy(orderByExpression);
-                    else
-                        return currentEvent.Events.OrderByDescending(orderByExpression);
+            var orderByParameter = Expression.Parameter(typeof(EventItem));
+            var orderByExpression = Expression.Lambda<Func<EventItem, IComparable>>(Expression.PropertyOrField(orderByParameter, sort), orderByParameter).Compile();
+            if (string.IsNullOrEmpty(sortMethod) || sortMethod == "asc")
+                return currentEvent.Events.OrderBy(orderByExpression);
+            else
+                return currentEvent.Events.OrderByDescending(orderByExpression);
 
-            }
+        }
+
+        private IEnumerable<Categories> SortCategories(EventDetail eventDetails, string sort, string sortMethod)
+        {
+            var orderByParameter = Expression.Parameter(typeof(Categories));
+            var orderByExpression = Expression.Lambda<Func<Categories, IComparable>>(Expression.PropertyOrField(orderByParameter, sort), orderByParameter).Compile();
+            if (string.IsNullOrEmpty(sortMethod) || sortMethod == "asc")
+                return eventDetails.Categories.OrderBy(orderByExpression);
+            else
+                return eventDetails.Categories.OrderByDescending(orderByExpression);
+
         }
     }
 }
