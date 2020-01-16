@@ -3,6 +3,7 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Bussines.Service
 {
@@ -15,9 +16,17 @@ namespace Bussines.Service
             this.settings = settings;
         }
 
-        public Event GetEvents()
+        public Event GetEvents(string sortBy)
         {
-            return this.Get<Event>("events");
+            if (string.IsNullOrEmpty(sortBy))
+                return this.Get<Event>("events");
+
+            else
+            {
+                var events = this.Get<Event>("events");
+                events.Events = SortEvents(events, sortBy);
+                return events;
+            }
         }
 
         public Event GetEventsByCategory(int category, string sortBy)
@@ -82,14 +91,10 @@ namespace Bussines.Service
                         Categories = d.Categories.OrderBy(r => r.Title)
                     });
                 default:
-                    return currentEvent.Events.OrderBy(r => r.Title).Select(d => new EventItem
-                    {
-                        Id = d.Id,
-                        Closed = d.Closed,
-                        Link = d.Link,
-                        Title = d.Title,
-                        Categories = d.Categories.OrderBy(r => r.Title)
-                    });
+                    var orderByParameter = Expression.Parameter(typeof(EventItem));
+                    var orderByExpression = Expression.Lambda<Func<EventItem, IComparable>>(Expression.PropertyOrField(orderByParameter, sort), orderByParameter).Compile();
+                    return currentEvent.Events.OrderBy(orderByExpression);
+
             }
         }
     }

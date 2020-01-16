@@ -10,6 +10,7 @@ namespace Bussines
         public static void BussinesDependenctyInjector(this IServiceCollection service)
         {
             service.AddScoped<IEventService, EventService>();
+            service.AddScoped<ICategoryService, CategoryService>();
         }
     }
 }

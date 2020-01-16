@@ -22,9 +22,9 @@ namespace TestFukeApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string sortBy)
         {
-            return Ok(this.eventService.GetEvents());
+            return Ok(this.eventService.GetEvents(sortBy));
         }
 
         [HttpGet]
