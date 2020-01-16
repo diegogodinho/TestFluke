@@ -16,6 +16,7 @@
 
 <h3> Event ID: @Model.EventID</h3>
 <br />
+<input type="hidden" id="eventID" value="@Model.EventID"/>
 <div class="row">
     <div class="col-6">
         <div class="form-group">
@@ -29,6 +30,14 @@
         <div class="form-group">
             <label>Link</label>
             <input type="text" class="form-control" readonly="readonly" id="Link" />
+        </div>
+        <div class="form-group">
+            <label>The event is closed</label>
+            <input type="text" class="form-control" readonly="readonly" id="IsClosed" />
+        </div>
+        <div class="form-group">
+            <label>Closed date</label>
+            <input type="text" class="form-control" readonly="readonly" id="DataClosed" />
         </div>
         <hr />
         <div class="form-group">
@@ -53,46 +62,5 @@
 
 @section Scripts{
     <script src="@Url.Content("~/Scripts/Sorting.js")"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('.header-click').click(function () {
-                var sort = SortTable(this);
-                GetEvent({
-                    EventID:'@Model.EventID',
-                    SortByField: $(this).data('clickdata'),
-                    SortMethod: sort
-                });
-            });
-            function GetEvent(model) {
-                $("#bodyCategories").empty();
-                $.ajax({
-                        url: 'https://localhost:44300/api/Event/GetByID',
-                        dataType: 'json',
-                        method: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify(model),
-                        success: function (data) {
-                            $('#Title').val(data.title);
-                            $('#Link').val(data.link);
-                            $('#Description').val(data.description);
-                            $(data.categories).each(function (index, element) {
-                                var elementRow = $('<tr>');
-                                var elementID = $("<td>", { "text": element.id });
-                                var elementTitle = $("<td>", { "text": element.title });
-                                elementRow.append(elementID);
-                                elementRow.append(elementTitle);
-                                $('#bodyCategories').append(elementRow);
-                            });
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                });
-            }
-            function init() {
-                GetEvent({EventID:'@Model.EventID'});
-            }
-            init();
-        });
-    </script>
+    <script src="@Url.Content("~/Scripts/EventDetailController.js")"></script>
 }
