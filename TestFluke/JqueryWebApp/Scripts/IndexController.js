@@ -48,6 +48,7 @@
             },
             error: function (error) {
                 console.log(error);
+                alert('Data not found!');
             }
         });
     }

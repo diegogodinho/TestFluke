@@ -19,8 +19,7 @@
                 $('#Title').val(data.title);
                 $('#Link').val(data.link);
                 $('#Description').val(data.description);
-                $('#IsClosed').val(data.isClosed);
-                debugger;
+                $('#IsClosed').val(data.isClosed);                
                 if (data.closed) {
                     var newDate = formatDate(data.closed);
                     console.log(newDate);
